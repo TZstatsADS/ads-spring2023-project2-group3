@@ -27,14 +27,38 @@ names(df_career) <- c("Career Level", "Posting.Date", "Freq")
 # sidebar
 sidebar <- dashboardSidebar(
   sidebarMenu(
-    menuItem("Jobs Over Time", tabName = "dashboard", icon = icon("dollar-sign"))
+    menuItem("Home", tabName = "Home", icon = icon("home")),
+    menuItem("Jobs Over Time", tabName = "dashboard1", icon = icon("dollar-sign")),
+    menuItem("Appendix", tabName = "Appendix1", icon = icon("fas fa-asterisk"))
   )
 )
 
 # body 
 body <- dashboardBody(
   tabItems(
-    tabItem("dashboard",
+    tabItem(tabName = "Home", fluidPage(
+      fluidRow(box(width = 15, title = "Introduction", status = "primary",
+                   solidHeader = TRUE, h3("Insights into NYC Jobs"),
+                   h4("By Kaitlyn Brown, Wen Chen, Linda Lin, Nixon Mckenzie, Zerui Zhang, Tianyi Zhu"),
+                   h5("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"),
+                   h5("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"))),
+      fluidRow(box(width = 15, title = "Targeted User", status = "primary", solidHeader=TRUE,
+                   h5("We believe that the application would be useful for anyone who is interested in Jobs in NYC."))),
+      fluidRow(box(width = 15, title = "How to take advanage of the APP", status = "primary",
+                   solidHeader = TRUE,
+                   h5("How to use the APP"),
+                   tags$div(tags$ul(
+                     tags$li("The", strong("first"), "tab: Introduction"),
+                     tags$li("The", strong("second"), "tab: XXXXXXXXXXXXXXXXXXXXXXX"),
+                     tags$li("The", strong("third"), "tab: XXXXXXXXXXXXXXXXXXXXXX"),
+                     tags$li("The", strong("fourth"), "tab: XXXXXXXXXXXXXXXXXXXXXX"),
+                     tags$li("The", strong("fifth"),"tab: Appendix and data sources")
+                     
+                   ))
+      ))
+    )),
+    
+    tabItem("dashboard1",
             fluidRow(box(title = "Choose An Agency",
                          width = 4,
                          status = "warning", 
@@ -100,6 +124,44 @@ body <- dashboardBody(
             )
             
     )
+  ),
+  
+    tabItem(tabName = "Appendix1", fluidPage( 
+      HTML(
+      "<h2> Data Sources </h2>
+                <h4> <p><li>NYC Jobs Data: <a href='https://data.cityofnewyork.us/City-Government/NYC-Jobs/kpav-sd4t'>NYC Jobs database</a></li></h4>"
+    ),
+    
+    titlePanel("Disclaimers "),
+    
+    HTML(
+      " <p>XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.</p>",
+      " <p>XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+ </p>"),
+    
+    titlePanel("Acknowledgement  "),
+    
+    HTML(
+      " <p>This application is built using R shiny app.</p>",
+      "<p>The following R packages were used in to build this RShiny application:</p>
+                <li>Shinytheme</li>
+                <li>Tidyverse</li>
+                <li>Dyplr</li><li>Plyr</li><li>lubridate</li><li>Plotly</li>
+                <li>ggplot2</li>"
+    ),
+    
+    titlePanel("Contacts"),
+    
+    HTML(
+      " <p>For more information please feel free to contact</p>",
+      " <p>Brown, Kaitlyn(keb2234@columbia.edu) </p>",
+      " <p>Chen, Wen(cw3229@columbia.edu)</p>",
+      " <p>Lin, Linda(yl5144@columbia.edu) </p>",
+      " <p>Mckenzie, Nixon(nnm2132@columbia.edu)</p>",
+      " <p>Zhang, Zerui(zz2999@columbia.edu) </p>",
+      " <p>Zhu, Tianyi(tz2538@columbia.edu) </p>")
+   
+  )
   )
 )
 

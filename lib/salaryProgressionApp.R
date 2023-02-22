@@ -150,7 +150,7 @@ server <- function(input, output) {
       top_n(10) %>%
       ggplot(aes(x = factor(agency_name), y = mean_salary, fill = agency_name)) +
       geom_col() +
-      labs(title = element_text("Top 10 of mean salary"), x = "Agency name", y = "Mean score")+
+      labs(title = element_text("Top 10 of mean salary"), x = "Agency name", y = "Mean salary")+
       coord_flip()
   })
   

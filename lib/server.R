@@ -2,9 +2,8 @@
 library(readr)
 library(dplyr)
 library(lubridate)
-salaries <- read_csv("salaries.csv")
-salaries <- salaries %>%
-  subset( years_active < 40 )
+salaries <- read_csv("salaries_reduce.csv")
+
 
 
 #Building the App
@@ -12,37 +11,6 @@ salaries <- salaries %>%
 library(shiny)
 library(ggplot2)
 library(shinythemes)
-# Define UI
-ui <- fluidPage(
-  # App title
-  titlePanel("Salary Progression by Agency"),
-  
-  sidebarLayout(
-    sidebarPanel(
-      selectInput("borough", "Select Borough:",
-                  choices = sort(unique(salaries$borough))),
-      selectInput(inputId = "agency",
-                  label = "Choose an agency:",
-                  choices = sort(unique(salaries$agency_name))),
-      
-      # selectInput(inputId = "title",
-      #             label = "Choose an title:",
-      #             choices = unique(salaries$title_description))
-    ),
-    mainPanel(
-      plotOutput("salary_plot"),
-      plotOutput("barPlot"),
-      plotOutput("meanplot"),
-      plotOutput(outputId = "scatterplot"),
-      plotOutput(outputId = "plot"),
-      
-      
-      
-      
-    )
-  )
-)
-
 ## Warning: The select input "title" contains a large number of options; consider
 ## using server-side selectize for massively improved performance. See the Details
 ## section of the ?selectizeInput help topic.
@@ -60,7 +28,7 @@ server <- function(input, output) {
       ungroup()
   })
   
-
+  
   # Create the salary progression plot
   output$salary_plot <- renderPlot({
     ggplot(salary_by_years_active(), aes(x = years_active, y = avg_salary)) +
@@ -130,4 +98,4 @@ server <- function(input, output) {
 }
 
 #To run the app
-shinyApp(ui = ui, server = server)
+server

@@ -27,7 +27,7 @@ We have three Research questions:
 	+ https://data.cityofnewyork.us/City-Government/NYC-Jobs/kpav-sd4t
 	+ https://data.cityofnewyork.us/City-Government/Citywide-Payroll-Data-Fiscal-Year-/k397-673e
 
-+ **Shiny App Link**: https://kaitlynbrown.shinyapps.io/application2/
++ **Shiny App Link**: https://iynaituhz.shinyapps.io/Desktop/
 	+ Note: The code for this shiny app can be found in the application folder. However, this site contains a link to another shiny app. The code for that shiny app can be found in the lib folder.
 
 + **Contribution statement**: Tianyi Zhu and Wen Chen worked on the job postings type and level analysis. Nixon Mckenzie and Linda Lin worked on the salary progression analysis. Zerui Zhang and Kaitlyn Brown worked on the gender pay gap analysis. All team members contributed equally in all stages of this project. All team members approve our work presented in this GitHub repository including this contributions statement. 

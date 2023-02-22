@@ -14,9 +14,9 @@ skin <- tolower(skin)
 if (skin == "")
   skin <- "blue"
   
-df <- read.csv("~/gr5243/NYC_Jobs.csv")
-salary_data <-read.csv("~/gr5243/AnnualSalary.csv", stringsAsFactors = FALSE)
-salaries <- read_csv("~/gr5243/salaries.csv")
+df <- read.csv("NYC_Jobs.csv")
+salary_data <-read.csv("AnnualSalary.csv", stringsAsFactors = FALSE)
+salaries <- read_csv("salaries.csv")
 
 # Payroll analysis
 
@@ -55,8 +55,8 @@ body <- dashboardBody(
       fluidRow(box(width = 15, title = "Introduction", status = "primary",
                    solidHeader = TRUE, h3("Insights into NYC Jobs"),
                    h4("By Kaitlyn Brown, Wen Chen, Linda Lin, Nixon Mckenzie, Zerui Zhang, Tianyi Zhu"),
-                   h5("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"),
-                   h5("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"))),
+                   h5("The purpose of this app is to increase the transparency around NYC government Jobs."),
+                   h5("Answers are valuable to people seeking or currently working these jobs, to be able to have more information and pay transparency. Also valuable to these agencies to better understand why their postings may not be attracting applicants or why they may not be retaining their employees."))),
       fluidRow(box(width = 15, title = "Targeted User", status = "primary", solidHeader=TRUE,
                    h5("We believe that the application would be useful for anyone who is interested in Jobs in NYC."))),
       fluidRow(box(width = 15, title = "How to take advanage of the APP", status = "primary",
@@ -218,8 +218,8 @@ body <- dashboardBody(
       titlePanel("Disclaimers "),
       
       HTML(
-        " <p>XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.</p>",
-        " <p>XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+        " <p>It is debateable whether Covid has ended or not, we realize that our data could be somewhat misleading as time goes.</p>",
+        " <p>Also, the modern technologies are developing at a fast pace, it is likely that jobs and salaries are changing greatly over the years.
  </p>"),
       
       titlePanel("Acknowledgement  "),

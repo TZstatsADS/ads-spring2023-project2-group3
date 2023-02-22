@@ -6,13 +6,17 @@ library(plyr)
 library(shiny)
 library(ggplot2)
 library(readr)
+library(shiny)
+library(shinythemes)
+library(forcats)
+
 
 set.seed(1111)
 skin <- Sys.getenv("DASHBOARD_SKIN")
 skin <- tolower(skin)
 if (skin == "")
   skin <- "blue"
-
+  
 df <- read.csv("~/gr5243/NYC_Jobs.csv")
 salary_data <-read.csv("~/gr5243/AnnualSalary.csv", stringsAsFactors = FALSE)
 full_payroll_data <- read_csv("~/gr5243/Citywide_Payroll_Data__Fiscal_Year_.csv")
@@ -88,96 +92,96 @@ body <- dashboardBody(
     )),
     
     
-  
-  
-
+    
+    
+    
     #job posting
     tabItem(tabName = "dashboard1",fluidPage(
-            fluidRow(box(title = "Choose An Agency",
-                         width = 4,
-                         status = "warning", 
-                         solidHeader = TRUE, 
-                         collapsible = TRUE,
-              column(width = 8,
-                solidHeader = TRUE, status = "warning",
-                selectInput("agency", "Select an Agency",
-                            choices = unique(df$Agency),
-                            selected = unique(df$Agency)[0]
-                )
-              )),
-                box(
-                  title = "counts of Agency over time",
-                  column(offset = 1,
-                         width = 10,
-                         status = "primary",
-                         plotlyOutput("linePlot_agency")),
-                  width = 8, solidHeader = TRUE, status = "warning"
-                )
-            ),
-            fluidRow(box(title = "Choose a Posting Type",
-                         width = 4,
-                         status = "warning", 
-                         solidHeader = TRUE, 
-                         collapsible = TRUE,
-                         column(width = 8,
-                                solidHeader = TRUE, status = "warning",
-                                selectInput("posting", "Select a Posting Type",
-                                            choices = unique(df$Posting.Type),
-                                            selected = unique(df$Posting.Type)[0]
-                                )
-                         )),
-                     box(
-                       title = "counts of Posting Type",
-                       column(offset = 1,
-                              width = 10,
-                              status = "primary",
-                              plotlyOutput("linePlot_posting_type")),
-                       width = 8, solidHeader = TRUE, status = "warning"
-                     )
-            ),
-            fluidRow(box(title = "Choose a Career Level",
-                         width = 4,
-                         status = "warning", 
-                         solidHeader = TRUE, 
-                         collapsible = TRUE,
-                         column(width = 8,
-                                solidHeader = TRUE, status = "warning",
-                                selectInput("career", "Select a Career Level",
-                                            choices = unique(df$Career.Level),
-                                            selected = unique(df$Career.Level)[0]
-                                )
-                         )),
-                     box(
-                       title = "counts of Career Level",
-                       column(offset = 1,
-                              width = 10,
-                              status = "primary",
-                              plotlyOutput("linePlot_career")),
-                       width = 8, solidHeader = TRUE, status = "warning"
-                     )
-            )
-            
-    )
-  ),
-  
-  
-  #salary 
-  tabItem(tabName = "Salary", fluidPage(
-    # First analysis
-    titlePanel("Salary Differences by Agency, Year, and Sex"),
-    sidebarLayout(
-      sidebarPanel(
-        selectInput("agency", "Select an Agency:", choices = unique(salary_data$Agency.Name)),
-        selectInput("year", "Select a Year:", choices = unique(salary_data$Fiscal.Year)),
-        selectInput("sex", "Select a Sex:", choices = c("male", "female"), selected = "male")
+      fluidRow(box(title = "Choose An Agency",
+                   width = 4,
+                   status = "warning", 
+                   solidHeader = TRUE, 
+                   collapsible = TRUE,
+                   column(width = 8,
+                          solidHeader = TRUE, status = "warning",
+                          selectInput("agency", "Select an Agency",
+                                      choices = unique(df$Agency),
+                                      selected = unique(df$Agency)[0]
+                          )
+                   )),
+               box(
+                 title = "counts of Agency over time",
+                 column(offset = 1,
+                        width = 10,
+                        status = "primary",
+                        plotlyOutput("linePlot_agency")),
+                 width = 8, solidHeader = TRUE, status = "warning"
+               )
       ),
-      mainPanel(
-        tabsetPanel(
-          tabPanel("Base Difference", plotOutput("base_diff_plot")),
-          tabPanel("Percent Difference", plotOutput("percent_diff_plot"))
+      fluidRow(box(title = "Choose a Posting Type",
+                   width = 4,
+                   status = "warning", 
+                   solidHeader = TRUE, 
+                   collapsible = TRUE,
+                   column(width = 8,
+                          solidHeader = TRUE, status = "warning",
+                          selectInput("posting", "Select a Posting Type",
+                                      choices = unique(df$Posting.Type),
+                                      selected = unique(df$Posting.Type)[0]
+                          )
+                   )),
+               box(
+                 title = "counts of Posting Type",
+                 column(offset = 1,
+                        width = 10,
+                        status = "primary",
+                        plotlyOutput("linePlot_posting_type")),
+                 width = 8, solidHeader = TRUE, status = "warning"
+               )
+      ),
+      fluidRow(box(title = "Choose a Career Level",
+                   width = 4,
+                   status = "warning", 
+                   solidHeader = TRUE, 
+                   collapsible = TRUE,
+                   column(width = 8,
+                          solidHeader = TRUE, status = "warning",
+                          selectInput("career", "Select a Career Level",
+                                      choices = unique(df$Career.Level),
+                                      selected = unique(df$Career.Level)[0]
+                          )
+                   )),
+               box(
+                 title = "counts of Career Level",
+                 column(offset = 1,
+                        width = 10,
+                        status = "primary",
+                        plotlyOutput("linePlot_career")),
+                 width = 8, solidHeader = TRUE, status = "warning"
+               )
+      )
+      
+    )
+    ),
+    
+    
+    #salary 
+    tabItem(tabName = "Salary", fluidPage(
+      # First analysis
+      titlePanel("Salary Differences by Agency, Year, and Sex"),
+      sidebarLayout(
+        sidebarPanel(
+          selectInput("agency", "Select an Agency:", choices = unique(salary_data$Agency.Name)),
+          selectInput("year", "Select a Year:", choices = unique(salary_data$Fiscal.Year)),
+          selectInput("sex", "Select a Sex:", choices = c("male", "female"), selected = "male")
+        ),
+        mainPanel(
+          tabsetPanel(
+            tabPanel("Base Difference", plotOutput("base_diff_plot")),
+            tabPanel("Percent Difference", plotOutput("percent_diff_plot"))
+          )
         )
       )
-    )
     ),
     
     
@@ -193,10 +197,10 @@ body <- dashboardBody(
         plotOutput("salary_plot")
       )
     )
-  ),
-  
-  
-     #payroll
+    ),
+    
+    
+    #payroll
     tabItem(tabName = "Payroll", fluidPage(
       # App title
       titlePanel("Salary Progression by Agency"),
@@ -226,47 +230,47 @@ body <- dashboardBody(
         )
       )
     ),
-  
+    
     #appendix 
     tabItem(tabName = "Appendix", fluidPage( 
       HTML(
-      "<h2> Data Sources </h2>
+        "<h2> Data Sources </h2>
                 <h4> <p><li>NYC Jobs Data: <a href='https://data.cityofnewyork.us/City-Government/NYC-Jobs/kpav-sd4t'>NYC Jobs database</a></li></h4>"
-    ),
-    
-    titlePanel("Disclaimers "),
-    
-    HTML(
-      " <p>XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.</p>",
-      " <p>XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+      ),
+      
+      titlePanel("Disclaimers "),
+      
+      HTML(
+        " <p>XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.</p>",
+        " <p>XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
  </p>"),
-    
-    titlePanel("Acknowledgement  "),
-    
-    HTML(
-      " <p>This application is built using R shiny app.</p>",
-      "<p>The following R packages were used in to build this RShiny application:</p>
+      
+      titlePanel("Acknowledgement  "),
+      
+      HTML(
+        " <p>This application is built using R shiny app.</p>",
+        "<p>The following R packages were used in to build this RShiny application:</p>
                 <li>Shinytheme</li>
                 <li>Tidyverse</li>
                 <li>Dyplr</li><li>Plyr</li><li>lubridate</li><li>Plotly</li>
                 <li>ggplot2</li>"
-    ),
-    
-    titlePanel("Contacts"),
-    
-    HTML(
-      " <p>For more information please feel free to contact</p>",
-      " <p>Brown, Kaitlyn(keb2234@columbia.edu) </p>",
-      " <p>Chen, Wen(cw3229@columbia.edu)</p>",
-      " <p>Lin, Linda(yl5144@columbia.edu) </p>",
-      " <p>Mckenzie, Nixon(nnm2132@columbia.edu)</p>",
-      " <p>Zhang, Zerui(zz2999@columbia.edu) </p>",
-      " <p>Zhu, Tianyi(tz2538@columbia.edu) </p>")
-   
+      ),
+      
+      titlePanel("Contacts"),
+      
+      HTML(
+        " <p>For more information please feel free to contact</p>",
+        " <p>Brown, Kaitlyn(keb2234@columbia.edu) </p>",
+        " <p>Chen, Wen(cw3229@columbia.edu)</p>",
+        " <p>Lin, Linda(yl5144@columbia.edu) </p>",
+        " <p>Mckenzie, Nixon(nnm2132@columbia.edu)</p>",
+        " <p>Zhang, Zerui(zz2999@columbia.edu) </p>",
+        " <p>Zhu, Tianyi(tz2538@columbia.edu) </p>")
+      
+    )
+    )
+    )
   )
-)
-)
-)
 )
 
 
@@ -286,7 +290,7 @@ ui <- dashboardPage(header, sidebar, body, skin = skin)
 # Creating the server function with output and input parameters
 server <- function(input, output) {
   
-
+  
   
   # Creating the Agency Plot
   output$linePlot_agency <- renderPlotly({
@@ -294,10 +298,10 @@ server <- function(input, output) {
     df_a <- df_agency[df_agency$Agency == input$agency, ]
     
     fig_a <- plot_ly(df_a, x = ~Posting.Date, y = ~Freq, type = 'scatter', mode = 'lines') %>%
-             layout(title = paste(input$agency, 'counts with Posting Date'),
-                    xaxis = list(title = 'Posting Date'),
-                    yaxis = list(title = input$agency),
-                    plot_bgcolor = "#e5ecf6")
+      layout(title = paste(input$agency, 'counts with Posting Date'),
+             xaxis = list(title = 'Posting Date'),
+             yaxis = list(title = input$agency),
+             plot_bgcolor = "#e5ecf6")
     
     fig_a
     
@@ -309,10 +313,10 @@ server <- function(input, output) {
     df_p <- df_posting_type[df_posting_type['Posting Type'] == input$posting, ]
     
     fig_p <- plot_ly(df_p, x = ~Posting.Date, y = ~Freq, type = 'scatter', mode = 'lines') %>%
-             layout(title = paste(input$posting, 'counts with Posting Date'),
-                    xaxis = list(title = 'Posting Date'),
-                    yaxis = list(title = input$posting),
-                    plot_bgcolor = "#e5ecf6")
+      layout(title = paste(input$posting, 'counts with Posting Date'),
+             xaxis = list(title = 'Posting Date'),
+             yaxis = list(title = input$posting),
+             plot_bgcolor = "#e5ecf6")
     
     fig_p
     
@@ -324,13 +328,73 @@ server <- function(input, output) {
     df_c <- df_career[df_career['Career Level'] == input$career, ]
     
     fig_c <- plot_ly(df_c, x = ~Posting.Date, y = ~Freq, type = 'scatter', mode = 'lines')%>%
-             layout(title = paste(input$career, 'counts with Posting Date'),
-                    xaxis = list(title = 'Posting Date'),
-                    yaxis = list(title = input$career),
-                    plot_bgcolor = "#e5ecf6")
+      layout(title = paste(input$career, 'counts with Posting Date'),
+             xaxis = list(title = 'Posting Date'),
+             yaxis = list(title = input$career),
+             plot_bgcolor = "#e5ecf6")
     
     fig_c
-     })
+  })
+  
+  
+  # Create reactive data set filtered by title
+  filtered_data <- reactive({
+    salaries %>%
+      filter(#title_description == input$title,
+        agency_name == input$agency) %>%
+      arrange(start_date)
+  })
+  sala_freq = transform(salaries,Agency_Frequency=ave(seq(nrow(salaries)),agency_name,FUN=length))
+  sala_top =  group_by(salaries, agency_name) %>% 
+    dplyr::summarize(Agency_Frequency = n()) %>% 
+    arrange(desc(Agency_Frequency)) %>% 
+    top_n(10)
+  output$barPlot <- renderPlot({
+    
+    #top_n(sala_freq, 15, Agency_Frequency)
+    ggplot(sala_top, aes(x = agency_name, y = Agency_Frequency,fill = agency_name)) + 
+      geom_bar(stat='identity') +
+      labs(title = element_text("What is the most popular agency?")) +
+      ylab("Frequency of agency")+  geom_col(width = 0.5) +
+      coord_flip()
+    
+  })
+  output$meanplot <- renderPlot({
+    salaries %>%
+      group_by(agency_name) %>%
+      dplyr::summarize(mean_salary = mean(base_salary)) %>%arrange(desc(mean_salary))%>%
+      top_n(10) %>%
+      ggplot(aes(x = factor(agency_name), y = mean_salary, fill = agency_name)) +
+      geom_col() +
+      labs(title = element_text("Top 10 of mean salary"), x = "Agency name", y = "Mean salary")+
+      coord_flip()
+  })
+  
+  output$scatterplot <- renderPlot({
+    p = ggplot(data = filtered_data(), aes(x=input$agency, y=base_salary)) + geom_point(color = 'blue') +
+      xlab("Agency Name") +
+      ylab("Base Salary") +
+      ggtitle(paste0(input$agency, " Salary scater plot")) +
+      scale_color_gradient(low = "blue", high = "red")
+    plot(p)
+    
+  })
+  
+  # Create plot
+  output$plot <- renderPlot({
+    ggplot(filtered_data(), aes(x = years_active, y = base_salary)) +
+      geom_smooth() + 
+      geom_point() + 
+      xlab("Years Active") +
+      ylab("Base Salary") +
+      ggtitle(paste0(input$title, " Salary Progression")) +
+      scale_color_gradient(low = "blue", high = "red")
+  })
+  
+  
+  
+  
+  
   
   filtered_data <- reactive({
     salary_data %>%
@@ -383,19 +447,23 @@ server <- function(input, output) {
       labs(title = "Average Salary Difference by Year",
            x = "Year",
            y = ylab)
-})
+  })
   
   
+  # Create a reactive expression to filter the dataset based on the selected borough
   filtered_data1 <- reactive({
-    salaries%>%
+    salaries %>%
       filter(borough == input$borough)
   })
   # Create a reactive expression to calculate the average base salary by year
   salary_by_years_active <- reactive({
     filtered_data1() %>%
       group_by(years_active) %>%
-      summarize(avg_salary = mean(base_salary, na.rm = TRUE))
+      dplyr::summarize(avg_salary = mean(base_salary, na.rm = TRUE))%>%
+      ungroup()
   })
+  
+  
   # Create the salary progression plot
   output$salary_plot <- renderPlot({
     ggplot(salary_by_years_active(), aes(x = years_active, y = avg_salary)) +
@@ -405,64 +473,6 @@ server <- function(input, output) {
       ggtitle(paste0(input$title, " Salary Progression By Borough"))
   })
   
-  
-  library(forcats)
-  # Create reactive data set filtered by title
-  filtered_data <- reactive({
-    salaries %>%
-      filter(#title_description == input$title,
-        agency_name == input$agency) %>%
-      arrange(start_date)
-  })
-  sala_freq = transform(salaries,Agency_Frequency=ave(seq(nrow(salaries)),agency_name,FUN=length))
-  sala_top =  group_by(salaries, agency_name) %>% 
-    dplyr::summarize(Agency_Frequency = n()) %>% 
-    arrange(desc(Agency_Frequency)) %>% 
-    top_n(10)
-  output$barPlot <- renderPlot({
-    
-    #top_n(sala_freq, 15, Agency_Frequency)
-    ggplot(sala_top, aes(x = agency_name, y = Agency_Frequency,fill = agency_name)) + 
-      geom_bar(stat='identity') +
-      labs(title = element_text("What is the most popular agency?")) +
-      ylab("Frequency of agency")+  geom_col(width = 0.5) +
-      coord_flip()
-    
-  })
- 
-  
-  output$meanplot <- renderPlot({
-    salaries %>%
-      group_by(agency_name) %>%
-      summarise(mean_salary = mean(base_salary)) %>%arrange(desc(mean_salary))%>%
-      top_n(10) %>%
-      ggplot(aes(x = factor(agency_name), y = mean_salary, fill = agency_name)) +
-      geom_col() +
-      labs(title = element_text("Top 10 of mean salary"), x = "Agency name", y = "Mean score")+
-      coord_flip()
-  })
-  
- 
-  output$scatterplot <- renderPlot({
-    p = ggplot(data = filtered_data(), aes(x=input$agency, y=base_salary)) + geom_point(color = 'blue') +
-      xlab("Agency Name") +
-      ylab("Base Salary") +
-      ggtitle(paste0(input$agency, " Salary scater plot")) +
-      scale_color_gradient(low = "blue", high = "red")
-    plot(p)
-    
-  })
-  # Create plot
-  output$plot <- renderPlot({
-    ggplot(filtered_data(), aes(x = years_active, y = base_salary)) +
-      geom_smooth() + 
-      geom_point() + 
-      xlab("Years Active") +
-      ylab("Base Salary") +
-      ggtitle(paste0(input$title, " Salary Progression")) +
-      scale_color_gradient(low = "blue", high = "red")
-  })  
-
 }  
 
 

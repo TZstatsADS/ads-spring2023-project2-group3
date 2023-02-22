@@ -12,8 +12,10 @@ set.seed(1111)
   
 df <- read.csv("NYC_Jobs.csv")
 salary_data <-read.csv("AnnualSalary.csv", stringsAsFactors = FALSE)
-salaries <- read_csv("salaries.csv")
 
+
+# Creating the dashboard object for UI
+ui <- dashboardPage(header, sidebar, body, skin = skin)
 
 # Creating the server function with output and input parameters
 server <- function(input, output) {
@@ -114,82 +116,6 @@ server <- function(input, output) {
       labs(title = "Average Salary Difference over Years",
            x = "Year",
            y = ylab)
-  })
-  
-  #payroll
-  filtered_data3 <- reactive({
-    salaries %>%
-      filter(borough == input$borough)
-  })
-  # Create a reactive expression to calculate the average base salary by year
-  salary_by_years_active <- reactive({
-    filtered_data3() %>%
-      group_by(years_active) %>%
-      dplyr::summarize(avg_salary = mean(base_salary, na.rm = TRUE))%>%
-      ungroup()
-  })
-  
-  
-  # Create the salary progression plot
-  output$salary_plot <- renderPlot({
-    ggplot(salary_by_years_active(), aes(x = years_active, y = avg_salary)) +
-      geom_point() +
-      stat_smooth(method = loess, se = TRUE) +
-      labs(x = "Years Active", y = "Average Base Salary") +
-      ggtitle(paste0(input$title, " Salary Progression By Borough"))
-  })
-  
-  filtered_data4 <- reactive({
-    salaries %>%
-      filter(#title_description == input$title,
-        agency_name == input$agency) %>%
-      arrange(start_date)
-  })
-  sala_freq = transform(salaries,Agency_Frequency=ave(seq(nrow(salaries)),agency_name,FUN=length))
-  sala_top =  group_by(salaries, agency_name) %>% 
-    dplyr::summarize(Agency_Frequency = n()) %>% 
-    arrange(desc(Agency_Frequency)) %>% 
-    top_n(10)
-  output$barPlot <- renderPlot({
-    
-    #top_n(sala_freq, 15, Agency_Frequency)
-    ggplot(sala_top, aes(x = agency_name, y = Agency_Frequency,fill = agency_name)) + 
-      geom_bar(stat='identity') +
-      labs(title = element_text("What is the most popular agency?")) +
-      ylab("Frequency of agency")+  geom_col(width = 0.5) +
-      coord_flip()
-    
-  })
-  output$meanplot <- renderPlot({
-    salaries %>%
-      group_by(agency_name) %>%
-      dplyr::summarize(mean_salary = mean(base_salary)) %>%arrange(desc(mean_salary))%>%
-      top_n(10) %>%
-      ggplot(aes(x = factor(agency_name), y = mean_salary, fill = agency_name)) +
-      geom_col() +
-      labs(title = element_text("Top 10 of mean salary"), x = "Agency name", y = "Mean salary")+
-      coord_flip()
-  })
-  
-  output$scatterplot <- renderPlot({
-    p = ggplot(data = filtered_data4(), aes(x=input$agency, y=base_salary)) + geom_point(color = 'blue') +
-      xlab("Agency Name") +
-      ylab("Base Salary") +
-      ggtitle(paste0(input$agency, " Salary scater plot")) +
-      scale_color_gradient(low = "blue", high = "red")
-    plot(p)
-    
-  })
-  
-  # Create plot
-  output$plot <- renderPlot({
-    ggplot(filtered_data4(), aes(x = years_active, y = base_salary)) +
-      geom_smooth() + 
-      geom_point() + 
-      xlab("Years Active") +
-      ylab("Base Salary") +
-      ggtitle(paste0(input$title, " Salary Progression")) +
-      scale_color_gradient(low = "blue", high = "red")
   })
   
 }  

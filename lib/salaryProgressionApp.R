@@ -43,17 +43,21 @@ library(lubridate)
 ## 
 ##     date, intersect, setdiff, union
 # lets cut down the full dataset 
-salaries <- subset(full_payroll_data, select = c('Agency Name','Base Salary','Title Description','Agency Start Date'))
-
-colnames(salaries) <- c("agency_name", "base_salary",'title_description', "start_date")
-
-#convert our dates into the date format
+salaries <- full_payroll_data %>%
+  subset(select = c('Agency Name','Base Salary','Title Description','Agency Start Date', 'Work Location Borough'))
+colnames(salaries) <- c("agency_name", "base_salary",'title_description', "start_date", 'borough')
 salaries$start_date <- mdy(salaries$start_date)
-
-#Calculate the difference between current date and start_date in each row to get years_active
 salaries <- salaries %>%
   mutate(years_active = as.numeric(difftime(Sys.Date(), start_date, units = "weeks"))/52)
-
+salaries$years_active <- round(salaries$years_active)
+salaries$borough[salaries$borough == "Bronx"] <- "BRONX"
+salaries$borough[salaries$borough == "Queens"] <- "QUEENS"
+salaries$borough[salaries$borough == "Manhattan"] <- "MANHATTAN"
+salaries$borough[salaries$borough == "Richmond"] <- "RICHMOND"
+salaries <- salaries %>%
+  subset(years_active > -1) %>%
+  subset(years_active < 70) %>%
+  subset(base_salary > 10000 )
 
 #Building the App
 
@@ -67,20 +71,23 @@ ui <- fluidPage(
 
   sidebarLayout(
     sidebarPanel(
-
+      selectInput("borough", "Select Borough:",
+                  choices = sort(unique(salaries$borough))),
       selectInput(inputId = "agency",
                   label = "Choose an agency:",
                   choices = sort(unique(salaries$agency_name))),
+
       # selectInput(inputId = "title",
       #             label = "Choose an title:",
       #             choices = unique(salaries$title_description))
     ),
     mainPanel(
-
+      plotOutput("salary_plot"),
       plotOutput("barPlot"),
       plotOutput("meanplot"),
       plotOutput(outputId = "scatterplot"),
       plotOutput(outputId = "plot"),
+
       
 
       
@@ -92,6 +99,27 @@ ui <- fluidPage(
 ## using server-side selectize for massively improved performance. See the Details
 ## section of the ?selectizeInput help topic.
 server <- function(input, output) {
+  # Create a reactive expression to filter the dataset based on the selected borough
+  filtered_data1 <- reactive({
+    salaries%>%
+      filter(borough == input$borough)
+  })
+  # Create a reactive expression to calculate the average base salary by year
+  salary_by_years_active <- reactive({
+    filtered_data1() %>%
+      group_by(years_active) %>%
+      summarize(avg_salary = mean(base_salary, na.rm = TRUE))
+  })
+  # Create the salary progression plot
+  output$salary_plot <- renderPlot({
+    ggplot(salary_by_years_active(), aes(x = years_active, y = avg_salary)) +
+      geom_point() +
+      stat_smooth(method = loess, se = TRUE) +
+      labs(x = "Years Active", y = "Average Base Salary") +
+      ggtitle(paste0(input$title, " Salary Progression By Borough"))
+  })
+  
+  
   library(forcats)
   # Create reactive data set filtered by title
   filtered_data <- reactive({
@@ -146,6 +174,7 @@ server <- function(input, output) {
       ggtitle(paste0(input$title, " Salary Progression")) +
       scale_color_gradient(low = "blue", high = "red")
   })
+  
   
 }
 

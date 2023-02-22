@@ -16,8 +16,21 @@ if (skin == "")
   
 df <- read.csv("NYC_Jobs.csv")
 salary_data <-read.csv("AnnualSalary.csv", stringsAsFactors = FALSE)
-salaries <- read_csv("salaries.csv")
 
+
+
+#job posting analysis
+
+df$Posting.Date <- parse_date_time(df$Posting.Date, orders = c('mdy', 'dmy'))
+
+df_agency <- ddply(df, .(df$Agency, df$Posting.Date), nrow)
+names(df_agency) <- c("Agency", "Posting.Date", "Freq")
+
+df_posting_type <- ddply(df, .(df$Posting.Type, df$Posting.Date), nrow)
+names(df_posting_type) <- c("Posting Type", "Posting.Date", "Freq")
+
+df_career <- ddply(df, .(df$Career.Level, df$Posting.Date), nrow)
+names(df_career) <- c("Career Level", "Posting.Date", "Freq")
 
 # shiny app
 # sidebar
@@ -26,7 +39,6 @@ sidebar <- dashboardSidebar(
     menuItem("Home", tabName = "Home", icon = icon("home")),
     menuItem("Jobs Over Time", tabName = "dashboard1", icon = icon("dollar-sign")),
     menuItem("Salary", tabName = "dashboard2", icon = icon("dollar-sign")),
-    menuItem("Payroll", tabName = "dashboard3", icon = icon("dollar-sign")),
     menuItem("Appendix", tabName = "Appendix", icon = icon("fas fa-asterisk"))
   )
 )
@@ -161,37 +173,6 @@ body <- dashboardBody(
     )),
     
     
-    #payroll
-    tabItem(tabName = "dashboard3", fluidPage(
-      # App title
-      titlePanel("Salary Progression by Agency"),
-      
-      sidebarLayout(
-        sidebarPanel(
-          selectInput("borough", "Select Borough:",
-                      choices = sort(unique(salaries$borough))),
-          selectInput(inputId = "agency",
-                      label = "Choose an agency:",
-                      choices = sort(unique(salaries$agency_name))),
-          
-          # selectInput(inputId = "title",
-          #             label = "Choose an title:",
-          #             choices = unique(salaries$title_description))
-        ),
-        mainPanel(
-          plotOutput("salary_plot"),
-          plotOutput("barPlot"),
-          plotOutput("meanplot"),
-          plotOutput(outputId = "scatterplot"),
-          plotOutput(outputId = "plot"),
-          
-          
-          
-          
-        )
-      )
-    )),
-    
     #appendix 
     tabItem(tabName = "Appendix", fluidPage( 
       HTML(
@@ -233,6 +214,11 @@ body <- dashboardBody(
     )
   )
 )
+
+
+
+
+
 
 # header
 header <- dashboardHeader(

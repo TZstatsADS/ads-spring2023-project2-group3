@@ -22,7 +22,7 @@ The **learning goals** for this project is:
 Term: Spring 2023
 
 + Team 3
-+ **Project title**: + Team members
++ **Insight into NYC Jobs and Salaries**: Team Members
 	+ Kaitlyn Brown
 	+ Wen Chen
 	+ Linda Lin

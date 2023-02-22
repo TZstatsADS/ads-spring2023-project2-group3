@@ -429,6 +429,8 @@ server <- function(input, output) {
       coord_flip()
     
   })
+ 
+  
   output$meanplot <- renderPlot({
     salaries %>%
       group_by(agency_name) %>%
@@ -440,6 +442,7 @@ server <- function(input, output) {
       coord_flip()
   })
   
+ 
   output$scatterplot <- renderPlot({
     p = ggplot(data = filtered_data(), aes(x=input$agency, y=base_salary)) + geom_point(color = 'blue') +
       xlab("Agency Name") +
@@ -449,7 +452,6 @@ server <- function(input, output) {
     plot(p)
     
   })
-  
   # Create plot
   output$plot <- renderPlot({
     ggplot(filtered_data(), aes(x = years_active, y = base_salary)) +
@@ -459,7 +461,8 @@ server <- function(input, output) {
       ylab("Base Salary") +
       ggtitle(paste0(input$title, " Salary Progression")) +
       scale_color_gradient(low = "blue", high = "red")
-  })
+  })  
+
 }  
 
 

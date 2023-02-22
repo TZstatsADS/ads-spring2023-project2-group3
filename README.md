@@ -12,7 +12,7 @@ Term: Spring 2023
 	+ Kaitlyn Brown
 	+ Wen Chen
 	+ Linda Lin
-	+ Nixon Nigel Mckenzie
+	+ Nixon Mckenzie
 	+ Zerui Zhang
 	+ Tianyi Zhu
 

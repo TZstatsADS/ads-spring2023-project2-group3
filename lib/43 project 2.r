@@ -56,7 +56,7 @@ sidebar <- dashboardSidebar(
     menuItem("Jobs Over Time", tabName = "dashboard1", icon = icon("dollar-sign")),
     menuItem("Salary", tabName = "Salary", icon = icon("dollar-sign")),
     menuItem("Payroll", tabName = "payroll", icon = icon("dollar-sign")),
-    menuItem("Appendix", tabName = "Appendix1", icon = icon("fas fa-asterisk"))
+    menuItem("Appendix", tabName = "Appendix", icon = icon("fas fa-asterisk"))
   )
 )
 
@@ -92,7 +92,7 @@ body <- dashboardBody(
   
 
     #job posting
-    tabItem("dashboard1",
+    tabItem(tabName = "dashboard1",fluidPage(
             fluidRow(box(title = "Choose An Agency",
                          width = 4,
                          status = "warning", 
@@ -162,7 +162,7 @@ body <- dashboardBody(
   
   
   #salary 
-  tabItem("Salary", fluidPage(
+  tabItem(tabName = "Salary", fluidPage(
     # First analysis
     titlePanel("Salary Differences by Agency, Year, and Sex"),
     sidebarLayout(
@@ -228,7 +228,7 @@ body <- dashboardBody(
     ),
   
     #appendix 
-    tabItem(tabName = "Appendix1", fluidPage( 
+    tabItem(tabName = "Appendix", fluidPage( 
       HTML(
       "<h2> Data Sources </h2>
                 <h4> <p><li>NYC Jobs Data: <a href='https://data.cityofnewyork.us/City-Government/NYC-Jobs/kpav-sd4t'>NYC Jobs database</a></li></h4>"
@@ -264,6 +264,7 @@ body <- dashboardBody(
       " <p>Zhu, Tianyi(tz2538@columbia.edu) </p>")
    
   )
+)
 )
 )
 )

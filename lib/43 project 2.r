@@ -337,6 +337,11 @@ server <- function(input, output) {
   })
   
   
+  
+  
+  
+  
+  
   # Create reactive data set filtered by title
   filtered_data <- reactive({
     salaries %>%
@@ -390,6 +395,9 @@ server <- function(input, output) {
       ggtitle(paste0(input$title, " Salary Progression")) +
       scale_color_gradient(low = "blue", high = "red")
   })
+  
+  
+  
   
   
   

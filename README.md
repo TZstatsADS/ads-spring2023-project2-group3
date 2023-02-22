@@ -16,7 +16,12 @@ Term: Spring 2023
 	+ Zerui Zhang
 	+ Tianyi Zhu
 
-+ **Project summary**: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
++ **Project summary**:  The purpose of the app is to Increase transparency around NYC government jobs, particularly their payment, mainly helping job seekers to gain more information about job posting and payment transparency, so that they can have a better understanding of how their skills and experience are valued in the job market, which can ultimately lead to greater job satisfaction and fulfillment. Also, employers can gain information about how to attract and retain top talents,  obtain higher levels of employee engagement, productivity, and satisfaction, which can in turn boost business performance and profitability. 
+
+We have three Research questions: 
+	1. What kinds and levels of positions are being posted?
+	2.How do salaries progress over time?
+	3.What does the gender pay gap look like for NYC jobs?
 
 + **Data Sources**:
 	+ https://data.cityofnewyork.us/City-Government/NYC-Jobs/kpav-sd4t

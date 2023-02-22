@@ -19,8 +19,8 @@ Term: Spring 2023
 + **Project summary**: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
 + **Data Sources**:
-+ https://data.cityofnewyork.us/City-Government/NYC-Jobs/kpav-sd4t
-+ https://data.cityofnewyork.us/City-Government/Citywide-Payroll-Data-Fiscal-Year-/k397-673e
+	+ https://data.cityofnewyork.us/City-Government/NYC-Jobs/kpav-sd4t
+	+ https://data.cityofnewyork.us/City-Government/Citywide-Payroll-Data-Fiscal-Year-/k397-673e
 
 + **Shiny App Link**:
 

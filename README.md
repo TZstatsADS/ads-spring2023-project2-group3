@@ -16,7 +16,7 @@ Term: Spring 2023
 	+ Zerui Zhang
 	+ Tianyi Zhu
 
-+ **Project summary**:  The purpose of the app is to Increase transparency around NYC government jobs, particularly their payment, mainly helping job seekers to gain more information about job posting and payment transparency, so that they can have a better understanding of how their skills and experience are valued in the job market, which can ultimately lead to greater job satisfaction and fulfillment. Also, employers can gain information about how to attract and retain top talents,  obtain higher levels of employee engagement, productivity, and satisfaction, which can in turn boost business performance and profitability. 
++ **Project summary**:  The purpose of the app is to increase transparency around NYC government jobs, particularly their payment, mainly helping job seekers to gain more information about job postings and pay. This will give them a better understanding of how their skills and experience are valued in the job market, which can ultimately lead to greater job satisfaction and fulfillment. Additionally, employers can gain information about how to attract and retain top talent, obtain higher levels of employee engagement, productivity, and satisfaction, which can in turn boost business performance and profitability. 
 
 We have three Research questions: 
 	1. What kinds and levels of positions are being posted?

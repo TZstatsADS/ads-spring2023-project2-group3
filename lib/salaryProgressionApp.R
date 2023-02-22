@@ -1,53 +1,8 @@
-# Uploading the data set and getting an idea of how much Agencies there are 
+# Uploading the data set. This is a cut down version of the larger dataset 
 library(readr)
-full_payroll_data <- read_csv("Citywide_Payroll_Data__Fiscal_Year_.csv")
-## Rows: 5109775 Columns: 17
-## ── Column specification ────────────────────────────────────────────────────────
-## Delimiter: ","
-## chr (9): Agency Name, Last Name, First Name, Mid Init, Agency Start Date, Wo...
-## dbl (8): Fiscal Year, Payroll Number, Base Salary, Regular Hours, Regular Gr...
-## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-
-#Here's a function that takes in an agencies name as the input and outputs 
-#a dataframe with only that agency, the base salary, title_description, and the years worked at company 
-
 library(dplyr)
-## 
-## Attaching package: 'dplyr'
-## 
-## The following objects are masked from 'package:stats':
-## 
-##     filter, lag
-## 
-## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union
 library(lubridate)
-## Loading required package: timechange
-## 
-## Attaching package: 'lubridate'
-## 
-## The following objects are masked from 'package:base':
-## 
-##     date, intersect, setdiff, union
-# lets cut down the full dataset 
-salaries <- full_payroll_data %>%
-  subset(select = c('Agency Name','Base Salary','Title Description','Agency Start Date', 'Work Location Borough'))
-colnames(salaries) <- c("agency_name", "base_salary",'title_description', "start_date", 'borough')
-salaries$start_date <- mdy(salaries$start_date)
-salaries <- salaries %>%
-  mutate(years_active = as.numeric(difftime(Sys.Date(), start_date, units = "weeks"))/52)
-salaries$years_active <- round(salaries$years_active)
-salaries$borough[salaries$borough == "Bronx"] <- "BRONX"
-salaries$borough[salaries$borough == "Queens"] <- "QUEENS"
-salaries$borough[salaries$borough == "Manhattan"] <- "MANHATTAN"
-salaries$borough[salaries$borough == "Richmond"] <- "RICHMOND"
-salaries <- salaries %>%
-  subset(years_active > -1) %>%
-  subset(years_active < 70) %>%
-  subset(base_salary > 10000 )
+salaries <- read_csv("salaries.csv")
 
 #Building the App
 

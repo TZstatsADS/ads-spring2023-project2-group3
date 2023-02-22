@@ -13,15 +13,6 @@ full_payroll_data <- read_csv("Citywide_Payroll_Data__Fiscal_Year_.csv")
 #Here's a function that takes in an agencies name as the input and outputs 
 #a dataframe with only that agency, the base salary, title_description, and the years worked at company 
 
-agency_select <- function(agency){
-  #subset by agency, keeping 
-  newdata <- subset(full_payroll_data, full_payroll_data$`Agency Name` == agency, select = c('Agency Name','Base Salary','Title Description','Agency Start Date'))
-  
-  colnames(newdata) <- c("agency_name", "base_salary",'title_description', "start_date")
-  
-  return(newdata)
-}
-
 library(dplyr)
 ## 
 ## Attaching package: 'dplyr'

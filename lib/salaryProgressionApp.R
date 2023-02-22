@@ -1,4 +1,3 @@
-
 # Uploading the data set and getting an idea of how much Agencies there are 
 library(readr)
 full_payroll_data <- read_csv("Citywide_Payroll_Data__Fiscal_Year_.csv")
@@ -68,7 +67,7 @@ library(shinythemes)
 ui <- fluidPage(
   # App title
   titlePanel("Salary Progression by Agency"),
-
+  
   sidebarLayout(
     sidebarPanel(
       selectInput("borough", "Select Borough:",
@@ -76,7 +75,7 @@ ui <- fluidPage(
       selectInput(inputId = "agency",
                   label = "Choose an agency:",
                   choices = sort(unique(salaries$agency_name))),
-
+      
       # selectInput(inputId = "title",
       #             label = "Choose an title:",
       #             choices = unique(salaries$title_description))
@@ -87,9 +86,9 @@ ui <- fluidPage(
       plotOutput("meanplot"),
       plotOutput(outputId = "scatterplot"),
       plotOutput(outputId = "plot"),
-
       
-
+      
+      
       
     )
   )
@@ -101,15 +100,18 @@ ui <- fluidPage(
 server <- function(input, output) {
   # Create a reactive expression to filter the dataset based on the selected borough
   filtered_data1 <- reactive({
-    salaries%>%
+    salaries %>%
       filter(borough == input$borough)
   })
   # Create a reactive expression to calculate the average base salary by year
   salary_by_years_active <- reactive({
     filtered_data1() %>%
       group_by(years_active) %>%
-      summarize(avg_salary = mean(base_salary, na.rm = TRUE))
+      dplyr::summarize(avg_salary = mean(base_salary, na.rm = TRUE))%>%
+      ungroup()
   })
+  
+
   # Create the salary progression plot
   output$salary_plot <- renderPlot({
     ggplot(salary_by_years_active(), aes(x = years_active, y = avg_salary)) +
@@ -125,7 +127,7 @@ server <- function(input, output) {
   filtered_data <- reactive({
     salaries %>%
       filter(#title_description == input$title,
-             agency_name == input$agency) %>%
+        agency_name == input$agency) %>%
       arrange(start_date)
   })
   sala_freq = transform(salaries,Agency_Frequency=ave(seq(nrow(salaries)),agency_name,FUN=length))
@@ -135,7 +137,7 @@ server <- function(input, output) {
     top_n(10)
   output$barPlot <- renderPlot({
     
-      #top_n(sala_freq, 15, Agency_Frequency)
+    #top_n(sala_freq, 15, Agency_Frequency)
     ggplot(sala_top, aes(x = agency_name, y = Agency_Frequency,fill = agency_name)) + 
       geom_bar(stat='identity') +
       labs(title = element_text("What is the most popular agency?")) +
@@ -146,7 +148,7 @@ server <- function(input, output) {
   output$meanplot <- renderPlot({
     salaries %>%
       group_by(agency_name) %>%
-      summarise(mean_salary = mean(base_salary)) %>%arrange(desc(mean_salary))%>%
+      dplyr::summarize(mean_salary = mean(base_salary)) %>%arrange(desc(mean_salary))%>%
       top_n(10) %>%
       ggplot(aes(x = factor(agency_name), y = mean_salary, fill = agency_name)) +
       geom_col() +
@@ -161,7 +163,7 @@ server <- function(input, output) {
       ggtitle(paste0(input$agency, " Salary scater plot")) +
       scale_color_gradient(low = "blue", high = "red")
     plot(p)
-  
+    
   })
   
   # Create plot
@@ -180,4 +182,3 @@ server <- function(input, output) {
 
 #To run the app
 shinyApp(ui = ui, server = server)
-
